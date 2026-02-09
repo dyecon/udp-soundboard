@@ -23,12 +23,12 @@ The standalone version does not require Python to be installed on your system.
 1. Download the latest release from [Releases](https://github.com/dyecon/udp-soundboard/releases) and unzip it.
 2. Add MP3 or WAV files to the `_internal/sounds` directory.
 3. Double-click the executable to launch the app, then follow the on-screen instructions to select an audio output device.
-    > [!NOTE]
-    > macOS users may need to run the following command to launch the app:
-    > ```
-    >  xattr -d com.apple.quarantine -r /path/to/project/
-    > ``` 
-    > Replace `/path/to/project` with the folder containing both the executable and the _internal directory. 
+> [!NOTE]
+> macOS users may need to run the following command to launch the app:
+> ```
+>  xattr -d com.apple.quarantine -r /path/to/project/
+> ``` 
+> Replace `/path/to/project` with the folder containing both the executable and the _internal directory. 
 4. To play a sound, send a UDP message to 127.0.0.1:5001 in the format of `{sound name} {volume}`. For example, to play `chime.mp3` at 70% volume, send `chime 0.7`.
 Omit the volume parameter to use the default volume (defined by `DEFAULT_VOLUME`).
 
