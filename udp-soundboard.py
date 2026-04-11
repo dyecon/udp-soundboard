@@ -167,7 +167,7 @@ print(f"UDP mixer listening on {UDP_IP}:{UDP_PORT} (press ctrl-C to quit)")
 try:
     while True:
         try:
-            msg, _ = sock.recvfrom(64)
+            msg, addr = sock.recvfrom(64)
         except socket.timeout:
             continue # return to main thread every {TIMEOUT} seconds to allow KeyboardInterrupt
        
@@ -176,6 +176,12 @@ try:
             continue
         
         key = parts[0]
+
+        # If a ping is received, return pong
+        if key == b"ping":
+            sock.sendto(b"pong", addr)
+            continue
+        
         if key in audio_bank:
             volume_override = None
             if len(parts) > 1:

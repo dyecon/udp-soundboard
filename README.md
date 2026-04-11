@@ -7,7 +7,7 @@ UDP-based soundboard that plays sounds on a specified output device. Sounds play
 ### Method 1: Python
 1. Install dependencies:
     ```
-    python -m pip install sounddevice soundfile
+    python -m pip install numpy sounddevice soundfile
     ```
 2. Add MP3 or WAV files to the **sounds** directory
 3. Run the script:
@@ -15,8 +15,9 @@ UDP-based soundboard that plays sounds on a specified output device. Sounds play
     python udp-soundboard.py
     ```
     Then follow the on-screen instructions to select an audio output device.
-4. To play a sound, send a UDP message to 127.0.0.1:5001 in the format of `{sound name} {volume}`. For example, to play **chime.mp3** at 70% volume, send `chime 0.7`. 
+4. To play a sound, send a UDP packet to 127.0.0.1:5001 in the format of `{sound name} {volume}`. For example, to play **chime.mp3** at 70% volume, send `chime 0.7`. 
 Omit the volume parameter to use the default volume (defined by `DEFAULT_VOLUME`).
+5. To perform a health check, send `ping`. The program will return `pong`.
 
 ### Method 2: Standalone
 The standalone version does not require Python to be installed on your system.
@@ -29,13 +30,14 @@ The standalone version does not require Python to be installed on your system.
 >  xattr -d com.apple.quarantine -r /path/to/project/
 > ``` 
 > Replace `/path/to/project` with the folder containing both the executable and the _internal directory. 
-4. To play a sound, send a UDP message to 127.0.0.1:5001 in the format of `{sound name} {volume}`. For example, to play **chime.mp3** at 70% volume, send `chime 0.7`.
+4. To play a sound, send a UDP packet to 127.0.0.1:5001 in the format of `{sound name} {volume}`. For example, to play **chime.mp3** at 70% volume, send `chime 0.7`.
 Omit the volume parameter to use the default volume (defined by `DEFAULT_VOLUME`).
+5. To perform a health check, send `ping`. The program will return `pong`.
 
 ### Method 3: Build standalone app from source
 1. Install dependencies:
     ```
-    python -m pip install sounddevice soundfile pyinstaller
+    python -m pip install numpy sounddevice soundfile pyinstaller
     ```
 2. In the directory where `udp-soundboard.py` is located, run:
     ```sh
