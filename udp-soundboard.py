@@ -124,8 +124,6 @@ def audio_callback(outdata, frames, time, status):
     outdata.fill(0)
 
     with lock:
-        finished = []
-
         for sound in active_sounds:
             data = sound["data"]
             pos = sound["pos"]
@@ -137,11 +135,10 @@ def audio_callback(outdata, frames, time, status):
             outdata[:count] += data[pos:pos + count] * vol
             sound["pos"] += count
 
-            if sound["pos"] >= len(data):
-                finished.append(sound)
-
-        for sound in finished:
-            active_sounds.remove(sound)
+        # FIX: Rebuild the active_sounds list in-place, keeping only sounds 
+        # that haven't reached the end of their data array.
+        # This completely avoids the buggy .remove() equality checks.
+        active_sounds[:] = [s for s in active_sounds if s["pos"] < len(s["data"])]
 
     np.clip(outdata, -1.0, 1.0, out=outdata)
 
